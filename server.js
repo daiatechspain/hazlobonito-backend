@@ -7,17 +7,25 @@ const authRoutes = require('./routes/auth');
 const rewriteRoutes = require('./routes/rewrite');
 
 const app = express();
-app.use(cors());
+
+// ✅ CONFIGURACIÓN CORS PARA PERMITIR VERCEL
+app.use(cors({
+  origin: 'https://hazlobonito-frontend.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 app.use(express.json());
 
+// Rutas
 app.use('/api/auth', authRoutes);
 app.use('/api/rewrite', rewriteRoutes);
 
-// Inicializar la base de datos
+// Inicializar base de datos
 db.init();
 
-// Puerto dinámico para Render (usa el de .env o 3000 local)
+// Puerto
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`✅ Servidor escuchando en el puerto ${PORT}`);
+  console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
