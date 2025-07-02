@@ -9,12 +9,15 @@ const rewriteRoutes = require('./routes/rewrite');
 const app = express();
 app.use(cors());
 app.use(express.json());
+
 app.use('/api/auth', authRoutes);
 app.use('/api/rewrite', rewriteRoutes);
 
+// Inicializar la base de datos
 db.init();
 
+// Puerto dinámico para Render (usa el de .env o 3000 local)
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor escuchando en http://localhost:${PORT}`);
+  console.log(`✅ Servidor escuchando en el puerto ${PORT}`);
 });
